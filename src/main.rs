@@ -1,168 +1,223 @@
-use std::io;
+use  std::io;
+use rand::Rng;
 fn main() {
-loop{
-println!("please select the game mode below:------------
-1: Guessing game
-2: Sudoku
-3: Tik TAk Toe
-4: Dice Roll
-5: Game of chance
-6: lost at sea game
-7: Russina roullette
-8: Rock Paper Scissors
 
-
-");
-
-let mut choice = String::new();
-
-io::stdin()
-.read_line(& mut choice)
-.expect("failed to read line");
-
-let select:usize = choice
-.trim()
-.parse()
-.expect("invalid choice");
-
-if select == 1{
-    guessing_game()
-}
-else if select == 2 {
-    sudoku()
-}
-else if select == 3 {
-    tik_tack()
-}else if select == 4 {
-    dice_roll()
-}else if select == 5 {
-    chanced_up()
-}else if select == 6{
-    lost_at_sea()
-
-}
-else {
-    russian_roullette();
-}
-} 
-
-
-    
-/*  guessing_game();
-    sudoku();
-    tik_tak_toe();
-    roll_dice();
-    chance_game(); */ 
-    
-}
-
-fn guessing_game(){
-    println!("running guessing game-----");
-}
-
-fn sudoku(){
-    println!("running sudoku------");
-}
-
-fn tik_tack(){
-println!("running tik_tack ------");
-}
-
-fn dice_roll(){
-println!("running dice_roll ------");
-}
-
-fn  chanced_up(){
-println!("running chanced_up ------");
-}
-
-fn  lost_at_sea(){
-println!("running lost_at_sea ------");
-}
-
-fn russian_roullette(){
     println!("
+    WELCOME TO HOLSTRUMS GAMING WORLD----
     
-    running russian_roullette -------------
-    
-    Welcome player to a game of russian roullete
-    NOTE : if you loose you die ----
-    But thats not something to discourage you
-    
-    
-    so whats your name?
+    NOW THEN ENTER YOUR GAMER NAME  TO PROCEED");
 
-    --- enter name below ---
-    
-    ");
-
-    let mut name = String::new();
+    let mut  name = String::new();
 
     io::stdin()
     .read_line(& mut name)
-    .expect(" failed to fetch name");
+    .expect("failed to read line");
 
-let entry_name = name.trim();
+    let input : & str = name
+    .trim();
 
-println!(" ---------
-ahhhhh {entry_name} you sound like a responsible person ---
+    println!("
+    WELL HEY THERE {input}-----
+    READY FOY THE GAME OF YOUR LIFE 
+    >>>YES
+    >>>NO");
 
-shall we proceed (YES / NO)
+    let  mut gaming_continue = String::new();
 
-");
+    io::stdin()
+    .read_line(& mut gaming_continue)
+    .expect("failed to read line");
 
-let mut  proceed = String::new();
+    let input_game : & str = gaming_continue
+    .trim();
 
-io::stdin()
-    .read_line(& mut proceed)
-    .expect(" failed to fetch name");
+    if input_game == "yes"
+    { 
 
-let choice2: &str = proceed.trim();
+    
 
-if choice2 == "yes" {
-println!("what game mode would you like
-A.constant probability
-B.changing probability
-")
+    println!("
+    
+    PLEASE SECLECT A GAME TO PROCEED-----
+    
+    
+    1:Russian roullette
+    2: Tick Tack Toe"
+);
+
+    let mut game_select = String::new();
+
+    io::stdin()
+    .read_line(& mut game_select)
+    .expect("failed to read line");
+
+    let input : usize = game_select
+    .trim()
+    .parse()
+    .expect("please enter an integer");
+
+    if input == 1
+    {
+    russian(& name);
+
+    }
+ 
+
+
+
+
+
+
 }
-
 else {
-
-    println!("---- Exiting program -----");
+    println!("
+    EXITING GAME ************ ");
     return;
 }
-
-let mut game_mode = String::new();
-
-io::stdin()
-    .read_line(& mut game_mode)
-    .expect(" failed to fetch name");
-
-let choice3: &str = &game_mode.trim();
-
-if choice3 == "A"{
-constant_prob(entry_name);
 }
+fn russian (x:& str){
+    println!("
+    Well you seem like a reasonable person -{x}
+    you wouldnt mind risking your life now would you ---
 
-else {
-    changing_prob(entry_name);
-}
-}
 
-fn constant_prob(x:&str){
-
-    println!("Time to play for your life {x}----
-
-    HOW TO PLAY-----
-    1: There's a revolver on the table ---
-    2: We both take to spin the barrel and fire at each other ---
-    3: When the bullet lands in the chamber and fired the opponent dies and effectively looses
-    
+    1: I mean its alright
+    2: I do mind
     ");
 
+    let  mut risk = String::new();
+
+    io::stdin().read_line(& mut risk).expect("read failed");
+
+    let risk_in : usize = risk
+    .trim()
+    .parse()
+    .expect("not a number");
+
+    if risk_in == 1
+    {
+        println!(" Thats more like it I knew you had guts")
+    }
+
+    println!("
+    HERE IS THE GAME-----
+    THERE IS A REVOLVER ON THE TABLE ---
+    WE WILL TAKE TURNS TO SPIN THE BARREL --
+    AND FIRE AT EACH OTHER IF THE BULLET LANDS IN THE CAMBER ---
+    THE PERSON FIRED AT DIES-- AND LOOSES
+
+    NOW  then who should go first 
+
+    >>> ME OR YOU 
+
+    ");
+
+    let mut first = String::new();
+
+    io::stdin()
+    .read_line(&mut first )
+    .expect("dang i cant get whose first");
+
+    let first_run = first.trim();
+
+    if first_run == "me" {
+
+        player_starts();
+    }
+
+    else {
+        println!("
+        WELL --- WELL --- WELL
+        BRACE FOR IMPACT------");
+
+        computer_starts();
+    }
+
+
+
 }
 
-fn changing_prob(x:&str){
+fn player_starts(){
 
-    println!("Time to play for your life {x}");
+
+        println!("
+        OKAY ---- TAKE THE GUN
+        SPIN THE BARELL -------
+        WRITE --fire-- TO FIRE THE GUN ");
+
+    let mut fire = String::new();
+
+    io::stdin().read_line(& mut fire). expect("failed to fire gun");
+
+    let  fired_gun = fire.trim();
+
+    if  fired_gun == "fire"{
+
+    let sectret_1 = rand::thread_rng().gen_range(1..= 6);
+
+
+    println!("secret number 1 is {sectret_1}");
+    let y :i32 = 1;
+    if sectret_1 == y {
+
+        println!("
+        BOOM----
+        TARGET ELIMINATED ---
+        YOU GOT SUM LUCK THERE YOU JUST WON*");
+
+        return;
+    }
+
+    else {
+        
+        println!("
+        CLICK*-----
+        NOW ITS MY TURN ");
+        computer_starts();
+    }
+
+}
+}
+fn computer_starts(){
+
+        println!("
+        BARRELL SPIN-----
+        ARE YOU READY--
+        >>YES
+        >>NO ");
+
+    let mut ready = String::new();
+    io::stdin().read_line(& mut ready).expect("i cant tell if youre ready or not");
+
+    let player_ready = ready.trim();
+
+    if player_ready == "yes"{
+
+      let sectret_2 = rand::thread_rng().gen_range(1..=6);
+
+      println!("secret number is 2 {sectret_2}");
+      let z:i32 = 1;
+
+    if sectret_2 == z{
+
+        println!("
+        BOOM----
+        **********************
+        **********************
+        UNFORTUNATELY YOU DIED");
+
+        return;
+    }
+
+    else {
+
+        println!("
+        click **
+        OH WELL I GUESS ITS YOUR TURN");
+
+        player_starts();
+    }
+
+
+}
 }
